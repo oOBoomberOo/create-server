@@ -18,7 +18,7 @@ jobs:
       - name: Install Dependency
         run: apt install zip -y
 
-      - uses: extrations/setup-just@v1
+      - uses: extractions/setup-just@v1
         with:
           just-version: 0.8
 
@@ -27,7 +27,7 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create_release@v1
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
