@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Install Dependency
-        run: apt install zip -y
+        run: sudo apt-get install zip -y
 
       - uses: extractions/setup-just@v1
         with:
