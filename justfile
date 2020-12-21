@@ -1,5 +1,4 @@
 build mem="2G":
-    rm -r out/
     just build_raw 'out/raw.zip'
     just build_instance 'out/instance.zip'
     just build_server 'out/server.zip' 'forge-installer.jar' {{mem}}
