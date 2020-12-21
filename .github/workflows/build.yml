@@ -1,0 +1,67 @@
+on:
+  push:
+    tags:
+      - v*
+  workflow_dispatch:
+
+name: Build Modpack
+
+jobs:
+  build:
+    name: Build Modpack
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependency
+        run: apt install zip -y
+
+      - uses: extrations/setup-just@v1
+        with:
+          just-version: 0.8
+
+      - name: Building
+        run: just build
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create_release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION }}
+          release_name: ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Raw
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "out/raw.zip"
+          asset_name: "raw.zip"
+          asset_content_type: application/zip
+
+      - name: Upload Instance
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "out/instance.zip"
+          asset_name: "instance.zip"
+          asset_content_type: application/zip
+
+      - name: Upload Server
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: "out/server.zip"
+          asset_name: "server.zip"
+          asset_content_type: application/zip
