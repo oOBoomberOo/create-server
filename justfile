@@ -10,8 +10,7 @@ build_server dest installer mem="2G": prepare
     #!/usr/bin/env sh
     workdir=$(mktemp -d -t liviryn-XXXXXXX)
 
-    cp -r "input/.minecraft/config/" $workdir/config
-    cp -r "input/.minecraft/mods/" $workdir/mods
+    just copy_data $workdir
 
     java -jar {{installer}} --installServer $workdir/
 
@@ -36,7 +35,7 @@ build_instance dest: prepare
 
     cp -r "input/.packignore" "input/instance.cfg" "input/mmc-pack.json" $workdir
     mkdir -p $workdir/.minecraft
-    cp -r "input/.minecraft/config/" "input/.minecraft/mods/" $workdir/.minecraft
+    just copy_data $workdir/.minecraft
     
     cd $workdir
     zip -r compress.zip * .minecraft .packignore
@@ -48,7 +47,7 @@ build_instance dest: prepare
 build_raw dest: prepare
     #!/usr/bin/env sh
     workdir=$(mktemp -d -t liviryn-XXXXXXX)
-    cp -r "input/.minecraft/config/" "input/.minecraft/mods/" $workdir
+    just copy_data $workdir
     rm {{dest}}
 
     cd $workdir
@@ -57,3 +56,6 @@ build_raw dest: prepare
     mv $workdir/compress.zip {{dest}}
 
     rm -rf $workdir
+
+copy_data dest:
+    cp -r "input/.minecraft/config/" "input/.minecraft/mods/" "input/.minecraft/defaultconfigs/" {{dest}}
