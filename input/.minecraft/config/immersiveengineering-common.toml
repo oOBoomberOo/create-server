@@ -12,8 +12,8 @@ preferredOres = ["immersiveengineering"]
 	enableDebug = false
 
 	[debug.wires]
-		#Enable detailed logging for the wire network. This can be useful for developers to track down issues related to wires.
-		enableWireLogger = false
 		#Run sanity checks on the wire network after every interaction. This will cause a decent amount of lag and a lot of log spam if the wire network isn't fully intact. Only enable when asked to by an IE developer.
 		validateNets = false
+		#Enable detailed logging for the wire network. This can be useful for developers to track down issues related to wires.
+		enableWireLogger = false
 
