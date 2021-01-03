@@ -1,0 +1,7 @@
+
+[travelersIndex]
+	#A list of blacklisted items
+	blackListedItems = []
+	#A list of blacklisted mods
+	blackListedMods = ["curios", "geolosys"]
+
